@@ -59,7 +59,7 @@ async function kittenbotInit () {
   controller.ready(() => {
     controller.hears(['hello', 'hi'], ['message', 'direct_message'],
       async (bot, message) => {
-        await bot.reply(message, 'Meow. :smile_cat:')
+        await bot.reply(message, 'Meowwwww. :smile_cat:')
       })
   })
 }
