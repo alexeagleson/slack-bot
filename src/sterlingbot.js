@@ -22,6 +22,8 @@ const { SlackAdapter, SlackEventMiddleware } = require(
   'botbuilder-adapter-slack')
 const { SecretManagerServiceClient } = require('@google-cloud/secret-manager')
 
+const StandardsMatch = /\b(review|photography|logo|information architecture|brand standard|design quality|build quality|shopping tools)(s|es|ies)?\b/gi;
+
 /**
  * Returns the secret string from Google Cloud Secret Manager
  * @param {string} name The name of the secret.
@@ -62,6 +64,11 @@ async function sterlingbotInit () {
 
   // Controller is ready
   controller.ready(() => {
+    controller.hears(StandardsMatch, ['message', 'direct_message'],
+      async (bot, message) => {
+        return bot.reply(message, 'Sounds like you\re talking about your review!');
+      })
+
     controller.hears(['hello', 'hi'], ['message', 'direct_message'],
       async (bot, message) => {
         return bot.reply(message, 'Meow. :smile_cat:')
@@ -78,6 +85,18 @@ async function sterlingbotInit () {
         }
       })
     // END: listen for cat emoji delivery
+
+       // START: listen for cat emoji delivery
+       controller.hears(['logo', 'review', 'photography', 'accessibility'],
+       ['message', 'direct_message'],
+       async (bot, message) => {
+         // Don't respond to self
+         if (message.bot_id !== message.user) {
+           await bot.startConversationInChannel(message.channel, message.user)
+           return bot.beginDialog('kitten-delivery')
+         }
+       })
+     // END: listen for cat emoji delivery
 
     // START: slash commands
     controller.on('slash_command', async (bot, message) => {
@@ -210,5 +229,6 @@ function createKittenDialog (controller) {
   return (convo)
 }
 // END: kitten-delivery convo
+
 
 sterlingbotInit()
