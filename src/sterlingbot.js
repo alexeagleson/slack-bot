@@ -41,9 +41,9 @@ async function accessSecretVersion (name) {
 }
 
 /**
- * Asynchronous function to initialize kittenbot.
+ * Asynchronous function to initialize sterlingbot.
  */
-async function kittenbotInit () {
+async function sterlingbotInit () {
   const adapter = new SlackAdapter({
     clientSigningSecret: await accessSecretVersion('client-signing-secret'),
     botToken: await accessSecretVersion('bot-token')
@@ -211,4 +211,4 @@ function createKittenDialog (controller) {
 }
 // END: kitten-delivery convo
 
-kittenbotInit()
+sterlingbotInit()

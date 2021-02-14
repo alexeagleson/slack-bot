@@ -20,6 +20,6 @@ WORKDIR /src
 RUN npm install
 
 # Bundle app source.
-COPY kittenbot.js /src
+COPY sterlingbot.js /src
 
-CMD ["node", "kittenbot"]
+CMD ["node", "sterlingbot"]
