@@ -180,7 +180,7 @@ function createKittenDialog (controller) {
 
   // If numCats is too large, jump to start of the yes_kittens thread
   convo.addMessage(
-    'Sorry, {{vars.num_kittens}} is too many cats. Pick a smaller number.',
+    'Sorry, {{vars.num_kittens}} is too many cats. Pick a better number.',
     'too_many')
   convo.addAction('yes_kittens', 'too_many')
 
