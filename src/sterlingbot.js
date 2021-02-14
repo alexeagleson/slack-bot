@@ -66,7 +66,9 @@ async function sterlingbotInit () {
   controller.ready(() => {
     controller.hears(StandardsMatch, ['message', 'direct_message'],
       async (bot, message) => {
-        return bot.reply(message, 'Sounds like you\re talking about your review!');
+        if (message.bot_id !== message.user) {
+          return bot.reply(message, "Sounds like you're talking about your review!");
+        }
       })
 
     controller.hears(['hello', 'hi'], ['message', 'direct_message'],
