@@ -73,7 +73,7 @@ async function sterlingbotInit () {
 
     controller.hears(['hello', 'hi'], ['message', 'direct_message'],
       async (bot, message) => {
-        return bot.reply(message, 'Meowww. :smile_cat:')
+        return bot.reply(message, 'Meowwwwwwwwwwwww. :smile_cat:')
       })
 
     // START: listen for cat emoji delivery
