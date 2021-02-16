@@ -17,12 +17,16 @@ limitations under the License.
 This is a sample Slack bot built with Botkit.
 */
 
+require('dotenv').config()
+
 const { Botkit, BotkitConversation } = require('botkit')
 const { SlackAdapter, SlackEventMiddleware } = require(
   'botbuilder-adapter-slack')
 const { SecretManagerServiceClient } = require('@google-cloud/secret-manager')
 
 const StandardsMatch = /\b(review|photography|logo|information architecture|brand standard|design quality|build quality|shopping tools)(s|es|ies)?\b/gi;
+
+console.log(process.env.BOT_TOKEN)
 
 /**
  * Returns the secret string from Google Cloud Secret Manager
@@ -47,8 +51,8 @@ async function accessSecretVersion (name) {
  */
 async function sterlingbotInit () {
   const adapter = new SlackAdapter({
-    clientSigningSecret: await accessSecretVersion('client-signing-secret'),
-    botToken: await accessSecretVersion('bot-token')
+    clientSigningSecret: process.env.SIGNING_SECRET || await accessSecretVersion('client-signing-secret'),
+    botToken: process.env.BOT_TOKEN || await accessSecretVersion('bot-token')
   })
 
   adapter.use(new SlackEventMiddleware())
@@ -73,7 +77,7 @@ async function sterlingbotInit () {
 
     controller.hears(['hello', 'hi'], ['message', 'direct_message'],
       async (bot, message) => {
-        return bot.reply(message, 'Meowwwwwwwwwwwww. :smile_cat:')
+        return bot.reply(message, 'Meowww. :smile_cat:')
       })
 
     // START: listen for cat emoji delivery
